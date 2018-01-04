@@ -31,7 +31,7 @@ env:
     - MODULE_VERSION=0.1.1
 
 install:
-  - git clone --branch=master https://github.com/thefrontside/mod-kb-ebsco.git
+  - git clone --branch=master https://github.com/folio-org/mod-kb-ebsco.git
   - cd mod-kb-ebsco
   - bundle install
 
