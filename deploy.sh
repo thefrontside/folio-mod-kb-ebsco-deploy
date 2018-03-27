@@ -7,6 +7,13 @@ put_info() ( printf "${BLUE}[INFO]${RESET} $1\n");
 put_info "Pulling new image into container '${KUBE_DEPLOYMENT_CONTAINER_NAME}' on deployment '${KUBE_DEPLOYMENT_NAME}'";
 kubectl config view;
 kubectl config current-context;
+
+# For rolling deploys, we really should be using the explicit tag name and not 'latest'.  However,
+# since this is decoupled from the folio-org pipeline, there aren't many elegant options for getting ahold
+# of that information (short of directly polling dockerhub).  For now, this hack will force a rolling update
+# despite no "real" change in the manifest, since each call to `kubectl set image` below is effectually identical
+# See: https://stackoverflow.com/questions/40366192/kubernetes-how-to-make-deployment-to-update-image
+kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} ${KUBE_DEPLOYMENT_CONTAINER_NAME}=${DOCKER_IMAGE_NAME};
 kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} ${KUBE_DEPLOYMENT_CONTAINER_NAME}=${DOCKER_IMAGE_NAME}:latest;
 
 # variables needed for Okapi registration
