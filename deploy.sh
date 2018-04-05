@@ -4,6 +4,9 @@ bash_escape() ( printf '\\033[%dm' $1; );
 RESET=$(bash_escape 0); BLUE=$(bash_escape 34);
 put_info() ( printf "${BLUE}[INFO]${RESET} $1\n");
 
+put_info "WHAT TIME IS IT Y'ALL $(date +%T)";
+put_info "Dockerhub has these tags:";
+curl -s -S "https://registry.hub.docker.com/v2/repositories/folioci/mod-kb-ebsco/tags/" | jq -c '.results | .[].name';
 put_info "Pulling new image into container '${KUBE_DEPLOYMENT_CONTAINER_NAME}' on deployment '${KUBE_DEPLOYMENT_NAME}'";
 kubectl config view;
 kubectl config current-context;

@@ -3,9 +3,6 @@ jobs:
   build:
     docker:
       - image: google/cloud-sdk
-    branches:
-      only:
-        - master
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS: ~/gcloud-service-key.json
       - PROJECT_ID: okapi-173322
